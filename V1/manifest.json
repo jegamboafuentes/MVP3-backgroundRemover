@@ -1,0 +1,37 @@
+{
+    "manifest_version": 3,
+    "name": "Background Remover",
+    "short_name": "metaverseprofessional_extension_template",
+    "version": "1.0",
+    "author": "Metaverse Professional",
+    "description": "Remove image backgrounds from web.",
+    "permissions": ["contextMenus","activeTab", "storage", "downloads", "scripting"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://extensionpay.com/*"],
+            "js": ["ExtPay.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["http://*/", "https://*/"],
+            "js": ["ExtPay.js", "content.js"]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+          "16": "img/icon16.png",
+          "48": "img/icon48.png",
+          "128": "img/icon128.png"
+        }
+      },
+      "icons": {
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png"
+      }
+}
+

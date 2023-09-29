@@ -1,0 +1,11 @@
+/* styles.css */
+footer {
+    text-align: center;
+}
+
+#pay-now {
+    padding: 5px 10px; /* Adjust as needed */
+    font-size: 12px;   /* Adjust as needed */
+    width: 80px;       /* Adjust as needed */
+    height: 30px;      /* Adjust as needed */
+}

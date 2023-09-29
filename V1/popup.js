@@ -2,7 +2,7 @@
 // registered on ExtensionPay.com to test payments. You may need to
 // uninstall and reinstall the extension to make it work.
 // Don't forget to change the ID in background.js too!
-const extpay = ExtPay('test4')
+const extpay = ExtPay('test5')
 
 document.querySelector('#pay-now').addEventListener('click', function () {
     extpay.openPaymentPage();
@@ -39,3 +39,16 @@ extpay.getUser().then(user => {
 })
 
 // extpay.onPaid(function() { console.log('popup paid')});
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Fetch the credits from storage and display them.
+    chrome.storage.local.get(['credits'], function(result) {
+        const creditsElement = document.getElementById('credits-count');
+        if (result.credits !== undefined) {
+            creditsElement.textContent = result.credits;
+        } else {
+            creditsElement.textContent = '0'; // Or whatever default value you'd like
+        }
+    });
+});
+

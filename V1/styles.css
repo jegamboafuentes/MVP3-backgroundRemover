@@ -9,3 +9,7 @@ footer {
     width: 80px;       /* Adjust as needed */
     height: 30px;      /* Adjust as needed */
 }
+
+#credits-display{
+    text-align: center;
+}

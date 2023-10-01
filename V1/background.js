@@ -22,6 +22,10 @@ const API_URL = 'https://sdk.photoroom.com/v1/segment';
 //const API_KEY = '123'
 const API_KEY = '81c62101741a6188f31e26654afecfa54627f1ef'; // Replace with your actual API key
 
+const NEW_API_URL = 'https://image-background-remove-tool-4jgsa4zbxq-uc.a.run.app/api/removebg';
+const NEW_API_KEY = '';  // The new API key goes here, if any
+
+
 chrome.runtime.onInstalled.addListener(() => {
     chrome.contextMenus.create({
         id: 'removeBackground',
@@ -45,10 +49,11 @@ async function removeBackground(imgUrl) {
         const formData = new FormData();
         formData.append('image_file', imageBlob, 'image.jpg');
 
-        const response = await fetch(API_URL, {
+        const response = await fetch(NEW_API_URL, {
             method: 'POST',
             headers: {
-                'x-api-key': API_KEY
+                'X-Api-Key': NEW_API_KEY, 
+                'MODEL': 'u2net'
             },
             body: formData
         });

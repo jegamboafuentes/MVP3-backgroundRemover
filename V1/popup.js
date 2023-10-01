@@ -40,15 +40,43 @@ extpay.getUser().then(user => {
 
 // extpay.onPaid(function() { console.log('popup paid')});
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Fetch the credits from storage and display them.
-    chrome.storage.local.get(['credits'], function(result) {
-        const creditsElement = document.getElementById('credits-count');
-        if (result.credits !== undefined) {
-            creditsElement.textContent = result.credits;
-        } else {
-            creditsElement.textContent = '0'; // Or whatever default value you'd like
+chrome.storage.local.get(['imageState', 'imageData'], function (result) {
+    const state = result.imageState || "Image not loaded 🤔";
+    const imageData = result.imageData;
+
+    const imageElement = document.getElementById("processed-image");
+    const statusElement = document.getElementById("status-message");
+    const downloadButton = document.getElementById("download-image");
+
+    if (state === "API working") {
+        imageElement.src = "img/waiting.png";
+        statusElement.innerText = "API is working ... Please wait! ⏰";
+    } else if (state === "API finished" && imageData) {
+        imageElement.src = imageData;
+        statusElement.innerText = "Background removal complete! 🥳";
+        downloadButton.style.display = "block"; // Show the download button
+    } else {
+        statusElement.innerText = "Image not loaded.";
+    }
+});
+
+// Add a listener to handle the image download
+document.getElementById("download-image").addEventListener('click', function () {
+    chrome.storage.local.get(['imageData'], function (result) {
+        const imageData = result.imageData;
+        if (imageData) {
+            const link = document.createElement("a");
+            link.href = imageData;
+            link.download = 'processed_image.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     });
 });
+
+
+
+
+
 

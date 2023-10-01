@@ -13,3 +13,18 @@ footer {
 #credits-display{
     text-align: center;
 }
+
+header{
+    text-align: center;
+}
+
+#div-body{
+    text-align: center;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    margin: 10px 0; 
+}

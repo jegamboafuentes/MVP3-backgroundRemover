@@ -37,6 +37,7 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === 'removeBackground') {
         const imageUrl = info.srcUrl;
+        chrome.storage.local.set({ imageState: "API working" });
         removeBackground(imageUrl);
     }
 });
@@ -67,9 +68,11 @@ async function removeBackground(imgUrl) {
             chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                 chrome.scripting.executeScript({
                     target: { tabId: tabs[0].id },
-                    func: downloadImage,
+                    //func: downloadImage,
+                    func: notDownloadImage,
                     args: [base64data]
                 });
+            chrome.storage.local.set({ imageState: "API finished", imageData: base64data });
             });
         }
     } catch (error) {
@@ -80,8 +83,10 @@ async function removeBackground(imgUrl) {
 function downloadImage(dataURL) {
     const link = document.createElement("a");
     link.href = dataURL;
-    link.download = 'photoroom_result.png';
+    link.download = 'MP_backgroundRemover.png';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 }
+
+function notDownloadImage(dataURL) {}

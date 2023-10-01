@@ -15,15 +15,21 @@
 <body>
     <header>
         <h3 style="width: 222px">MVP3</h3>
-        <img src="img/axolot3.png" alt="My Extension logo" width="33">
         <p id="user-message" style="font-size: .66 rem;">User hasn't pay 😢</p>
         <button id="pay-now">Pay now</button>
     </header>
     <!-- Your Chrome extension -->
-    <p id="credits-display">Available credits: <span id="credits-count">0</span></p>
+    <div id="div-body">
+        <img id="processed-image" src="img/axolot3.png" alt="My Extension logo" width="111">
+        <p id="status-message"></p>
+        <div class="center-container">
+            <button id="download-image" style="display: none;">Download Image</button> <!-- Initially hidden -->
+        </div>
+
+    </div>
     <!-- END Your Chrome extension -->
     <footer>
-        <p>My Extension is a product of <a href="https://metaverseprofessional.tech/">Metaverse Professional</a></p>
+        <p>My Extension is a product of <a href="https://metaverseprofessional.tech/">Metaverse Professional LLC</a></p>
         <img src="img/LOGO1.png" alt="Project logo" width="33">
     </footer>
     <script src="ExtPay.js"></script>

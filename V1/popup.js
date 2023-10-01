@@ -49,7 +49,7 @@ chrome.storage.local.get(['imageState', 'imageData'], function (result) {
     const downloadButton = document.getElementById("download-image");
 
     if (state === "API working") {
-        imageElement.src = "img/waiting.png";
+        imageElement.src = "img/waiting.gif";
         statusElement.innerText = "API is working ... Please wait! ⏰";
     } else if (state === "API finished" && imageData) {
         imageElement.src = imageData;

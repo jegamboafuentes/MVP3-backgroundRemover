@@ -16,7 +16,7 @@
             "run_at": "document_start"
         },
         {
-            "matches": ["http://*/", "https://*/"],
+            "matches": ["http://*/*", "https://*/*"],
             "js": ["ExtPay.js", "content.js"]
         }
     ],

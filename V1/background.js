@@ -53,7 +53,7 @@ async function removeBackground(imgUrl) {
         const response = await fetch(NEW_API_URL, {
             method: 'POST',
             headers: {
-                'X-Api-Key': NEW_API_KEY, 
+                'X-Api-Key': NEW_API_KEY,
                 'MODEL': 'u2net'
             },
             body: formData
@@ -66,13 +66,22 @@ async function removeBackground(imgUrl) {
         reader.onloadend = function () {
             const base64data = reader.result;
             chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                chrome.scripting.executeScript({
-                    target: { tabId: tabs[0].id },
-                    //func: downloadImage,
-                    func: notDownloadImage,
-                    args: [base64data]
+                chrome.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+                    if (tabs.length > 0) {  // Check if any tabs were returned
+                        chrome.scripting.executeScript({
+                            target: { tabId: tabs[0].id },
+                            //func: downloadImage,
+                            func: notDownloadImage,
+                            args: [base64data]
+                        });
+                        chrome.storage.local.set({ imageState: "API finished", imageData: base64data });
+                    } else {
+                        console.error('No active tabs found.');
+                    }
+                }).catch((error) => {
+                    console.error('Error querying tabs:', error);
                 });
-            chrome.storage.local.set({ imageState: "API finished", imageData: base64data });
+                chrome.storage.local.set({ imageState: "API finished", imageData: base64data });
             });
         }
     } catch (error) {
@@ -89,4 +98,28 @@ function downloadImage(dataURL) {
     document.body.removeChild(link);
 }
 
-function notDownloadImage(dataURL) {}
+function notDownloadImage(dataURL) { }
+
+function checkIconStatus() {
+    chrome.storage.local.get('iconShouldChange', function(result) {
+        if (result.iconShouldChange) {
+            let iconPath;
+            if (result.iconShouldChange === 'working') {
+                //iconPath = 'img/waiting128.png';
+                iconPath = 'img/waiting48.png';
+            } else if (result.iconShouldChange === 'available') {
+                //iconPath = 'img/available128.png';
+                //iconPath = 'img/available48.png';
+                iconPath = 'img/icon48.png';
+            }
+            if (iconPath) {
+                chrome.action.setIcon({path: iconPath});
+            }
+            chrome.storage.local.remove('iconShouldChange');  // Clear the flag
+        }
+    });
+}
+
+// Check the icon status every 5 seconds
+setInterval(checkIconStatus, 5000);
+

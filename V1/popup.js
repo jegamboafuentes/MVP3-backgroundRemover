@@ -20,13 +20,17 @@ extpay.getUser().then(user => {
     if (user.trialStartedAt && (now - user.trialStartedAt) < elevenMinutes) {
         const remainingTimeInMinutes = (elevenMinutes - (now - user.trialStartedAt)) / 60000
         document.querySelector('#user-message').innerHTML = `trial active, remaining time ⌛ ${remainingTimeInMinutes.toFixed(2)} minutes`
-        document.querySelector('button').remove()
+        document.querySelector('#pay-now').remove()
+        document.querySelector('#download-image').removeAttribute('disabled');
+        document.querySelector('#download-image').style.display = 'block';
         // user's trial is active
     } else {
         // user's trial is not active
-        if (user.paid) {
-            document.querySelector('#user-message').innerHTML = 'User has paid ✅'
-            document.querySelector('button').remove()
+        if (user.subscriptionStatus === 'active') {
+            document.querySelector('#user-message').innerHTML = 'User has subscribed ✅'
+            document.querySelector('#pay-now').remove()
+            document.querySelector('#download-image').removeAttribute('disabled');
+            document.querySelector('#download-image').style.display = 'block';
         } else if (user.trialStartedAt == null) {
             document.querySelector('#user-message').innerHTML = 'User has not started a trial yet.'
         }
@@ -51,13 +55,17 @@ chrome.storage.local.get(['imageState', 'imageData'], function (result) {
     if (state === "API working") {
         imageElement.src = "img/waiting.gif";
         statusElement.innerText = "API is working ... Please wait! ⏰";
+        downloadButton.setAttribute('disabled', 'true');  // This line disables the button
+        chrome.storage.local.set({ iconShouldChange: 'working' });
     } else if (state === "API finished" && imageData) {
         imageElement.src = imageData;
         statusElement.innerText = "Background removal complete! 🥳";
-        downloadButton.style.display = "block"; // Show the download button
+        downloadButton.removeAttribute('disabled');  // This line re-enables the button
+        chrome.storage.local.set({ iconShouldChange: 'available' });
     } else {
         statusElement.innerText = "Image not loaded.";
     }
+
 });
 
 // Add a listener to handle the image download
@@ -67,7 +75,7 @@ document.getElementById("download-image").addEventListener('click', function () 
         if (imageData) {
             const link = document.createElement("a");
             link.href = imageData;
-            link.download = 'processed_image.png';
+            link.download = 'metaverse_professional_backgroundRemove.png';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);

@@ -13,12 +13,13 @@ extpay.getUser().then(user => {
         document.querySelector('#pay-now').addEventListener('click', extpay.openTrialPage())
     }
     const now = new Date();
-    //const sevenDays = 1000*60*60*24*7 // in milliseconds
+    const sevenDays = 1000*60*60*24*7 // in milliseconds
     //const thirtySeconds = 30 * 1000  //# in milliseconds
-    const elevenMinutes = 11 * 60 * 1000
+    //const elevenMinutes = 11 * 60 * 1000
     //const threeMinutes = 3 * 60 * 1000
-    if (user.trialStartedAt && (now - user.trialStartedAt) < elevenMinutes) {
-        const remainingTimeInMinutes = (elevenMinutes - (now - user.trialStartedAt)) / 60000
+    const trialTime = sevenDays; 
+    if (user.trialStartedAt && (now - user.trialStartedAt) < trialTime) {
+        const remainingTimeInMinutes = (trialTime - (now - user.trialStartedAt)) / 60000
         document.querySelector('#user-message').innerHTML = `trial active, remaining time ⌛ ${remainingTimeInMinutes.toFixed(2)} minutes`
         document.querySelector('#pay-now').remove()
         document.querySelector('#download-image').removeAttribute('disabled');

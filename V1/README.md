@@ -8,6 +8,9 @@ Easily remove image backgrounds from any website with just two clicks! Powered b
 - **Download Ready**: Once the background is removed, download the image directly from the extension.
 - **Trial & Subscription Options**: Test out the extension with a trial period, and subscribe for continued access.
 
+## Architecture: 
+![Alt text](https://github.com/jegamboafuentes/MVP3-backgroundRemover/blob/MetaverseProfessional_API_removebg/V1/img/architectureMVP3.png)
+
 ## Usage:
 1. Navigate to any website with images.
 2. Right-click on an image and select "Remove Background".

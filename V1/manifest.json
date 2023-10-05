@@ -1,10 +1,10 @@
 {
     "manifest_version": 3,
-    "name": "Background Remover",
-    "short_name": "metaverseprofessional_extension_template",
+    "name": " Instant Background Remover",
+    "short_name": "metaverseprofessional_Instant_Background_Remover",
     "version": "1.0",
     "author": "Metaverse Professional",
-    "description": "Remove image backgrounds from web.",
+    "description": "Easily remove image backgrounds from any website with just two clicks!🚀",
     "permissions": ["contextMenus","activeTab", "storage", "downloads", "scripting"],
     "background": {
         "service_worker": "background.js"

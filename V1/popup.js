@@ -2,7 +2,7 @@
 // registered on ExtensionPay.com to test payments. You may need to
 // uninstall and reinstall the extension to make it work.
 // Don't forget to change the ID in background.js too!
-const extpay = ExtPay('test5')
+const extpay = ExtPay('mvp3-instant-background-remover')
 
 document.querySelector('#pay-now').addEventListener('click', function () {
     extpay.openPaymentPage();
